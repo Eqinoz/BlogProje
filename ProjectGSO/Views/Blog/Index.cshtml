@@ -1,0 +1,33 @@
+﻿@model List<ProjectGSO.Models.DTO.BlogDTO>
+
+<div class="container">
+<div class="row">
+    <div class="col-lg-4 offset-lg-4  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.3s">
+        <div class="section-heading" style="margin-top: 15px; margin-bottom: 20px;">
+            <h6>Son Paylaşımlarımız</h6>
+            <h4>Haberler & <em>Gelişmeler</em></h4>
+            <div class="line-dec"></div>
+        </div>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-6 show-up wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
+            <div class="blog-post" style="margin-bottom:20px">
+                <div class="thumb">
+                    @* <a href="#"><img src="/images/blog-post-01.jpg" alt=""></a>*@
+                        <a href="#"><img src="@item.ImageUrl" alt=""></a>
+                </div>
+                <div class="down-content">
+                    <span class="category">@item.Tags</span>
+                    <span class="date">@item.AddeDateTime.ToShortDateString()</span>
+                    <a href="#"><h4>@item.Title</h4></a>
+                    <p>@item.Description</p>
+                    <span class="author"><img src="@item.AvatarUrl" alt="">@item.FirstName @item.LastName</span>
+                    <div class="border-first-button"><a href="/Blog/Details?id=@item.Id">Devamını Oku</a></div>
+                </div>
+            </div>
+        </div>
+    }
+    
+</div>
+</div>

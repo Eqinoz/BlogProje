@@ -1,0 +1,52 @@
+﻿@{
+    Layout = "_AdminLayout";
+}
+<div class="container-fluid">
+    <h3 class="text-dark mb-1">Blank Page</h3>
+</div>
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CKEditor 5 Sample</title>
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/44.1.0/ckeditor5.css" crossorigin>
+    <link rel="stylesheet" href="/css/editor.css" />
+</head>
+<body>
+    <form id="add" action="/Admin/AddBlog" method="post">
+
+        <div class="main-container" style="margin-top: 20px;">
+            <div class="mb-3">
+                <input class="form-control form-control-user" type="text" id="Title" placeholder="Başlık" name="Title">
+            </div>
+            <div class="mb-3">
+                <input class="form-control form-control-user" type="text" id="ImageUrl" placeholder="Fotoğraf Url'si" name="ImageUrl">
+            </div>
+            <div class="form-floating" style="margin-bottom:20px">
+                <textarea class="form-control" placeholder="Blog Hakkında Kısa Bir Açıklama" id="Description" name="Description" style="height: 100px"></textarea>
+                <label for="floatingTextarea2">Açıklama</label>
+            </div>
+            <div class="editor-container editor-container_classic-editor" id="editor-container">
+                <div class="editor-container__editor">
+                    <textarea id="Text" name="Text"></textarea>
+                </div>
+            </div>
+            <div class="mb-3">
+                <input class="form-control form-control-user" style="margin-top: 20px;" type="text" id="Tags" placeholder="Etiketler" name="Tags">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success" style="margin-left: 5px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy" viewBox="0 0 16 16">
+                <path d="M11 2H9v3h2z" />
+                <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z" />
+            </svg><br />Kaydet
+        </button>
+
+    </form>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/44.1.0/ckeditor5.umd.js" crossorigin></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/44.1.0/translations/tr.umd.js" crossorigin></script>
+    <script src="/js/editor.js"></script>
+</body>
+</html>
