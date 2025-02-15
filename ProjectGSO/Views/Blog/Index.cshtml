@@ -18,7 +18,14 @@
                         <a href="#"><img src="@item.ImageUrl" alt=""></a>
                 </div>
                 <div class="down-content">
-                    <span class="category">@item.Tags</span>
+                    @{
+                            string[] tags = item.Tags.Split(',');
+                            foreach (var tag in tags)
+                            {
+                                <span class="category">@tag</span>
+                            }
+                    }
+                    
                     <span class="date">@item.AddeDateTime.ToShortDateString()</span>
                     <a href="#"><h4>@item.Title</h4></a>
                     <p>@item.Description</p>

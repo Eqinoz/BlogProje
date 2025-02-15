@@ -10,9 +10,9 @@
         public string ImageUrl { get; set; }
         public DateTime AddeDateTime { get; set; }
         public string Tags { get; set; }
-        public int LikeCount { get; set; }
-        public int CommentCount { get; set; }
-        public int ViewCount { get; set; }
+        public int LikeCount { get; set; }= 0;
+        public int CommentCount { get; set; }=0;
+        public int ViewCount { get; set; }= 0;
         public bool Status { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ProjectGSO.DbContext;
 using ProjectGSO.Models;
+using ProjectGSO.Models.DTO;
 using ProjectGSO.Services.Abstrack;
 using static System.Net.WebRequestMethods;
 
@@ -16,15 +17,25 @@ namespace ProjectGSO.Services.Concrete
         }
 
 
-        public Users Login(string mail, string password)
+        public UsersDTO Login(string mail, string password)
         {
             var user = _context.Users.SingleOrDefault(u => u.Email == mail);
             if (user == null || !BCrypt.Net.BCrypt.Verify(password,user.Password))
             {
                 return null;
             }
+            var result = new UsersDTO();
+            result.Id = user.Id;
+            result.FirstName = user.FirstName;
+            result.LastName = user.LastName;
+            result.Email = user.Email;
+            result.Role = _context.Roles.Find(user.RoleId).RoleName;
+            result.Username = user.Username;
+            result.AvatarUrl = user.AvatarUrl;
+            result.Password = user.Password;
 
-            return user;
+
+            return result;
         }
 
         public bool Register(string firstName, string lastName, string mail, string password)
@@ -39,7 +50,7 @@ namespace ProjectGSO.Services.Concrete
                 LastName = lastName,
                 Email = mail,
                 AvatarUrl = "https://static.thenounproject.com/png/354384-200.png",
-                Role = "User",
+                RoleId = 3,
                 Username = "Kullanıcı",
                 Password = BCrypt.Net.BCrypt.HashPassword(password)
             };

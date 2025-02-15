@@ -22,6 +22,15 @@ namespace ProjectGSO.Controllers
             return View(blogs);
         }
 
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult Members()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

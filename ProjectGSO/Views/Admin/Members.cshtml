@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "_AdminLayout"; 
+}
+@model List<Members>
+<div class="container-fluid">
+<h3 class="text-dark mb-1">Üyeler</h3>
+
+@foreach (var item in Model)
+{
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">
+                @item.CompanyName
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        ...
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/Admin/BlogEdit?id=@item.Id">Düzenle</a></li>
+                        <li><a class="dropdown-item" href="#"></a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Sil</a></li>
+                    </ul>
+                </div>
+
+            </h5>
+
+            <p class="card-text">@item.Description</p>
+            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+        </div>
+        <img src="@item.ImageUrl" class="card-img-bottom" alt="..." style="height: 220px; width: 300px">
+    </div>
+}
+
+
+</div>

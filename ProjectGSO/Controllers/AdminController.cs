@@ -3,23 +3,26 @@ using Microsoft.AspNetCore.SignalR;
 using ProjectGSO.DbContext;
 using ProjectGSO.Models;
 using ProjectGSO.Models.DTO;
+using ProjectGSO.Models.ViewModel;
 
 namespace ProjectGSO.Controllers
 {
     public class AdminController : Controller
     {
         private readonly EfBlog _blog;
+        private readonly EfUsers _users;
         private readonly BlogDbContext _blogDbContext;
 
         public AdminController(BlogDbContext context)
         {
             _blog = new EfBlog();
             _blogDbContext = context;
+            _users = new EfUsers();
         }
         
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetString("Role")!= "Admin")
+            if (HttpContext.Session.GetString("Role")!= "Admin" && HttpContext.Session.GetString("Role") != "Author")
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -28,12 +31,43 @@ namespace ProjectGSO.Controllers
 
         public IActionResult Profile()
         {
-            return View();
+            var result = _users.ByIdGetUsers(int.Parse(HttpContext.Session.GetString("UserId"))).FirstOrDefault();
+            return View(result);
+        }
+
+        [HttpPost]
+        public IActionResult ProfileUpdate(UsersDTO usersDto)
+        {
+            var role = _blogDbContext.Roles.Where(x => x.RoleName == usersDto.Role).FirstOrDefault();
+            var result = _blogDbContext.Users.Where(x => x.Id == usersDto.Id).FirstOrDefault();
+            result.FirstName = usersDto.FirstName;
+            result.LastName = usersDto.LastName;
+            result.Email = usersDto.Email;
+            result.RoleId = role.Id;
+            result.Username = usersDto.Username;
+            if (usersDto.Password!=null)
+            {
+                result.Password = BCrypt.Net.BCrypt.HashPassword(usersDto.Password);
+            }
+            _blogDbContext.SaveChanges();
+            return RedirectToAction("Table");
         }
 
         public IActionResult Table()
         {
-            return View();
+           var result = _users.GetUsers();
+           var role = _blogDbContext.Roles.ToList();
+           var viewModel = new Role_User_ViewModel
+           {
+               Users = result,
+               Roles = role
+           };
+            return View(viewModel);
+        }
+        public IActionResult Members()
+        {
+            var result = _blogDbContext.Members.ToList();
+            return View(result);
         }
 
         public IActionResult BlogAdd()
@@ -77,15 +111,27 @@ namespace ProjectGSO.Controllers
         //Tüm Blogları Blogs Sayfasına Getiriyor.
         public IActionResult Blogs()
         {
-            var result = _blog.GetDetailBlog().OrderByDescending(x=>x.Id).ToList();
-            return View(result);
+            if (HttpContext.Session.GetString("Role")=="Admin")
+            {
+                var result = _blog.GetDetailBlog().ToList();
+                return View(result);
+            }
+            else if (HttpContext.Session.GetString("Role") == "Author")
+            {
+                var result = _blog.ByUserIdGetBlog(int.Parse(HttpContext.Session.GetString("UserId"))).ToList();
+                return View(result);
+            }
+
+            return null;
+
         }
         //BlogAdd Buton İle Blog Ekleme
         [HttpPost]
         public IActionResult AddBlog(BlogDTO blog)
         {
+            var userId= HttpContext.Session.GetString("UserId");
             Blog result = new Blog();
-            result.AuthorId = 2;
+            result.AuthorId = int.Parse(userId);
             result.Title = blog.Title;
             result.Description = blog.Description;
             result.Text = blog.Text;
@@ -99,7 +145,7 @@ namespace ProjectGSO.Controllers
 
             _blogDbContext.Blogs.Add(result);
             _blogDbContext.SaveChanges();
-            return RedirectToAction("/Admin/Blogs");
+            return RedirectToAction("Blogs");
         }
         //Statü Değiştirme
         public IActionResult ChangeStatus(int id)
@@ -114,6 +160,25 @@ namespace ProjectGSO.Controllers
 
 
             return Redirect(Request.Headers["Referer"].ToString());
+        }
+
+        
+
+        public IActionResult AddMember()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult MemberAdd(Members members)
+        {
+            var member = new Members();
+            member.CompanyName= members.CompanyName;
+            member.Description = members.Description;
+            member.ImageUrl = members.ImageUrl;
+            _blogDbContext.Members.Add(member);
+            _blogDbContext.SaveChanges();
+            return RedirectToAction("Members");
         }
     }
 }

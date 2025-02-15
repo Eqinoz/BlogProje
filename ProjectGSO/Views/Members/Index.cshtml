@@ -1,0 +1,35 @@
+﻿@model List<Members>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 offset-lg-4  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.3s">
+            <div class="section-heading" style="margin-top: 15px; margin-bottom: 20px;">
+                <h5>Gaziantep Gıda Kümesi</h5>
+                <h4>Daima En İyiyi Hedefleyen Ekibimizle <em>Tanışın</em></h4>
+                <div class="line-dec"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        
+        @foreach (var item in Model)
+        {
+            <div class="col-3">
+                <div class="item" style="width: 380px">
+                    <a href="#">
+                        <div class="portfolio-item">
+                            <div class="thumb">
+                                <img src="@item.ImageUrl" alt="">
+                            </div>
+                            <div class="down-content">
+                                <h4>@item.CompanyName</h4>
+                                <span>Sektör</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+        
+    </div>
+</div>

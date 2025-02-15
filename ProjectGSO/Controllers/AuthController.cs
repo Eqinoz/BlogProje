@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjectGSO.DbContext;
 using ProjectGSO.Services.Abstrack;
 using ProjectGSO.Services.Concrete;
 
@@ -7,10 +8,12 @@ namespace ProjectGSO.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
+        private readonly EfUsers _users;
 
         public AuthController(IAuthService authService)
         {
             _authService = authService;
+            _users = new EfUsers();
         }
          public IActionResult Register() => View();
          public IActionResult Login() => View();
@@ -34,6 +37,7 @@ namespace ProjectGSO.Controllers
                 HttpContext.Session.SetString("UserId", user.Id.ToString());
                 HttpContext.Session.SetString("UserName", user.FirstName + " " + user.LastName);
                 HttpContext.Session.SetString("Role", user.Role);
+                HttpContext.Session.SetString("AvatarUrl", user.AvatarUrl);
                 return RedirectToAction("Index","Home");
             }
             ViewBag.Error = "Mail Adresi veya Şifre Hatalı";

@@ -1,14 +1,15 @@
 ﻿@{
     Layout = "_AdminLayout";
 }
+@model ProjectGSO.Models.DTO.UsersDTO
 <div class="container-fluid">
     <h3 class="text-dark mb-4">Profile</h3>
     <div class="row mb-3">
         <div class="col-lg-4">
             <div class="card mb-3">
                 <div class="card-body text-center shadow">
-                    <img class="rounded-circle mb-3 mt-4" src="/images/image2.jpeg" width="160" height="160">
-                    <div class="mb-3"><button class="btn btn-primary btn-sm" type="button">Change Photo</button></div>
+                    <img class="rounded-circle mb-3 mt-4" src="@Model.AvatarUrl" width="160" height="160">
+                    <div class="mb-3"><button class="btn btn-primary btn-sm" type="button">Fotoğraf Değiştir</button></div>
                 </div>
             </div>
             <div class="card shadow mb-4">
@@ -80,18 +81,18 @@
                             <form>
                                 <div class="row">
                                     <div class="col">
-                                        <div class="mb-3"><label class="form-label" for="username"><strong>Username</strong></label><input class="form-control" type="text" id="username" placeholder="user.name" name="username"></div>
+                                        <div class="mb-3"><label class="form-label" for="username"><strong>Username</strong></label><input class="form-control" type="text" id="username" placeholder="user.name" name="username" value="@Model.Username"></div>
                                     </div>
                                     <div class="col">
-                                        <div class="mb-3"><label class="form-label" for="email"><strong>Email Address</strong></label><input class="form-control" type="email" id="email" placeholder="user@example.com" name="email"></div>
+                                        <div class="mb-3"><label class="form-label" for="email"><strong>Email Address</strong></label><input class="form-control" type="email" id="email" placeholder="user@example.com" name="email" value="@Model.Email"></div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <div class="mb-3"><label class="form-label" for="first_name"><strong>First Name</strong></label><input class="form-control" type="text" id="first_name" placeholder="John" name="first_name"></div>
+                                        <div class="mb-3"><label class="form-label" for="first_name"><strong>First Name</strong></label><input class="form-control" type="text" id="first_name" placeholder="John" name="first_name" value="@Model.FirstName"></div>
                                     </div>
                                     <div class="col">
-                                        <div class="mb-3"><label class="form-label" for="last_name"><strong>Last Name</strong></label><input class="form-control" type="text" id="last_name" placeholder="Doe" name="last_name"></div>
+                                        <div class="mb-3"><label class="form-label" for="last_name"><strong>Last Name</strong></label><input class="form-control" type="text" id="last_name" placeholder="Doe" name="last_name" value="@Model.LastName"></div>
                                     </div>
                                 </div>
                                 <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Save Settings</button></div>
